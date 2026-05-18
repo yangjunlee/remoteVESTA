@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011">
+  <Metadata>
+    <Identity Language="en-US" Id="remote-vesta-opener" Version="0.1.0" Publisher="local"/>
+    <DisplayName>Remote VESTA Opener</DisplayName>
+    <Description xml:space="preserve">Open remote POSCAR/CONTCAR/CIF files in local VESTA from VSCode Remote SSH.</Description>
+    <Tags>vesta,vasp,neb,poscar,contcar</Tags>
+    <Categories>Other</Categories>
+    <GalleryFlags>Public</GalleryFlags>
+    <Properties>
+      <Property Id="Microsoft.VisualStudio.Code.Engine" Value="^1.80.0"/>
+      <Property Id="Microsoft.VisualStudio.Code.ExtensionKind" Value="ui"/>
+    </Properties>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Id="Microsoft.VisualStudio.Code"/>
+  </Installation>
+  <Dependencies/>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.Code.Manifest" Path="extension/package.json" Addressable="true"/>
+    <Asset Type="Microsoft.VisualStudio.Code.JavaScript" Path="extension/extension.js" Addressable="true"/>
+    <Asset Type="Microsoft.VisualStudio.Code.Markdown" Path="extension/README.md" Addressable="true"/>
+  </Assets>
+</PackageManifest>
