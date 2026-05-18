@@ -20,6 +20,32 @@ It is intended for workflows such as VASP calculations on an HPC cluster through
 
 This extension should run as a VS Code UI extension. That is what allows it to launch the local VESTA application even when the file is stored in a remote SSH workspace.
 
+## Installation
+
+### Install from a VSIX File
+
+1. Download or build `remote-vesta-opener-*.vsix`.
+2. Open VS Code on the local machine where VESTA is installed.
+3. Run `Extensions: Install from VSIX...` from the command palette.
+4. Select the `.vsix` file.
+5. Reload VS Code if prompted.
+
+When you use VS Code Remote SSH, install this extension on the local VS Code side. The extension is configured as a UI extension so it can launch the local VESTA application while reading files from the remote workspace.
+
+### Build and Install from Source
+
+```bash
+git clone https://github.com/yangjunlee/remoteVESTA.git
+cd remoteVESTA
+./package_manual_vsix.sh
+```
+
+Then install the generated `.vsix` file with:
+
+```text
+Extensions: Install from VSIX...
+```
+
 ## Commands
 
 - `Remote VESTA: Open Active File`
@@ -135,6 +161,32 @@ Remote VESTA Opener는 원격 workspace에 있는 구조 파일을 로컬 VESTA 
 - VESTA가 읽을 수 있는 구조 파일: `POSCAR`, `CONTCAR`, `.vasp`, `.cif`, `.xyz`, `.xsf`, `.cube`, `.pdb` 등
 
 이 extension은 VS Code UI extension으로 동작해야 합니다. 그래야 파일은 원격 SSH workspace에 있어도, VESTA는 로컬 컴퓨터에서 실행할 수 있습니다.
+
+## 설치 방법
+
+### VSIX 파일로 설치
+
+1. `remote-vesta-opener-*.vsix` 파일을 다운로드하거나 직접 생성합니다.
+2. VESTA가 설치된 로컬 컴퓨터에서 VS Code를 엽니다.
+3. 명령 팔레트에서 `Extensions: Install from VSIX...`를 실행합니다.
+4. `.vsix` 파일을 선택합니다.
+5. VS Code가 요청하면 reload합니다.
+
+VS Code Remote SSH를 사용할 때도 이 extension은 로컬 VS Code 쪽에 설치하면 됩니다. 이 extension은 UI extension으로 설정되어 있어서, 원격 workspace의 파일을 읽으면서도 로컬 VESTA 프로그램을 실행할 수 있습니다.
+
+### 소스에서 빌드 후 설치
+
+```bash
+git clone https://github.com/yangjunlee/remoteVESTA.git
+cd remoteVESTA
+./package_manual_vsix.sh
+```
+
+그 다음 생성된 `.vsix` 파일을 VS Code에서 다음 명령으로 설치합니다.
+
+```text
+Extensions: Install from VSIX...
+```
 
 ## 명령
 
