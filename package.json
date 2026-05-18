@@ -1,0 +1,96 @@
+{
+  "name": "remote-vesta-opener",
+  "displayName": "Remote VESTA Opener",
+  "description": "Open remote POSCAR/CONTCAR/CIF files in local VESTA from VSCode Remote SSH.",
+  "version": "0.1.0",
+  "publisher": "local",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:remoteVesta.openActiveFile",
+    "onCommand:remoteVesta.openResource",
+    "onCommand:remoteVesta.openNebImage",
+    "onCommand:remoteVesta.configureExecutable"
+  ],
+  "main": "./extension.js",
+  "extensionKind": [
+    "ui"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "remoteVesta.openActiveFile",
+        "title": "Remote VESTA: Open Active File"
+      },
+      {
+        "command": "remoteVesta.openResource",
+        "title": "Remote VESTA: Open in VESTA"
+      },
+      {
+        "command": "remoteVesta.openNebImage",
+        "title": "Remote VESTA: Pick NEB Image"
+      },
+      {
+        "command": "remoteVesta.configureExecutable",
+        "title": "Remote VESTA: Configure VESTA Executable"
+      }
+    ],
+    "configuration": {
+      "title": "Remote VESTA Opener",
+      "properties": {
+        "remoteVesta.executablePath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the local VESTA executable. Leave empty to try PATH and common install locations."
+        },
+        "remoteVesta.tempDirectory": {
+          "type": "string",
+          "default": "",
+          "description": "Local temp directory for copied remote structure files. Leave empty to use the OS temp directory."
+        },
+        "remoteVesta.keepTempFiles": {
+          "type": "boolean",
+          "default": true,
+          "description": "Keep copied files so VESTA can reopen them later."
+        }
+      }
+    },
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "remoteVesta.openResource",
+          "group": "navigation@50"
+        },
+        {
+          "command": "remoteVesta.openNebImage",
+          "group": "navigation@51"
+        }
+      ],
+      "editor/title/context": [
+        {
+          "command": "remoteVesta.openActiveFile",
+          "group": "navigation@50"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "remoteVesta.openActiveFile"
+        },
+        {
+          "command": "remoteVesta.openNebImage"
+        },
+        {
+          "command": "remoteVesta.configureExecutable"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "check": "node --check extension.js"
+  },
+  "devDependencies": {}
+}
