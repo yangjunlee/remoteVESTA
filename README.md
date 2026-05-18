@@ -111,3 +111,119 @@ Extensions: Install from VSIX...
 - The copied local file is intentionally kept by default so VESTA can continue reading it after launch.
 - The extension does not modify the remote structure file.
 - The current NEB picker prefers `CONTCAR` over `POSCAR` when both are present.
+
+---
+
+# Remote VESTA Opener 한국어 안내
+
+Remote VESTA Opener는 원격 workspace에 있는 구조 파일을 로컬 VESTA 창에서 바로 열기 위한 작은 VS Code extension입니다.
+
+주 사용 사례는 VS Code Remote SSH로 HPC 서버의 VASP 계산 결과를 확인하는 workflow입니다. `POSCAR`, `CONTCAR`, `.vasp`, `.cif` 파일을 매번 직접 다운로드하지 않고, extension이 선택한 원격 파일을 로컬 임시 폴더에 복사한 뒤 로컬 VESTA 실행 파일로 열어줍니다.
+
+## 기능
+
+- 현재 열려 있는 구조 파일을 로컬 VESTA로 열기
+- VS Code Explorer에서 선택한 파일을 우클릭 메뉴로 열기
+- VASP NEB image 디렉터리(`00`, `01`, `02`, ...)를 골라 `CONTCAR` 또는 `POSCAR` 열기
+- `OSZICAR`가 있으면 NEB image 선택창에 최신 `E0` 값 표시
+- 명령 팔레트에서 로컬 VESTA 실행 파일 경로 설정
+
+## 필요 조건
+
+- VS Code Remote SSH 또는 다른 remote filesystem provider
+- 로컬 컴퓨터에 설치된 VESTA
+- VESTA가 읽을 수 있는 구조 파일: `POSCAR`, `CONTCAR`, `.vasp`, `.cif`, `.xyz`, `.xsf`, `.cube`, `.pdb` 등
+
+이 extension은 VS Code UI extension으로 동작해야 합니다. 그래야 파일은 원격 SSH workspace에 있어도, VESTA는 로컬 컴퓨터에서 실행할 수 있습니다.
+
+## 명령
+
+- `Remote VESTA: Open Active File`
+- `Remote VESTA: Open in VESTA`
+- `Remote VESTA: Pick NEB Image`
+- `Remote VESTA: Configure VESTA Executable`
+
+## 설정
+
+```json
+{
+  "remoteVesta.executablePath": "",
+  "remoteVesta.tempDirectory": "",
+  "remoteVesta.keepTempFiles": true
+}
+```
+
+자주 쓰는 VESTA 실행 파일 경로:
+
+- macOS: `/Applications/VESTA.app/Contents/MacOS/VESTA`
+- Windows: `C:\\Program Files\\VESTA-win64\\VESTA.exe`
+- Linux: `/usr/local/bin/VESTA`
+
+`remoteVesta.executablePath`가 비어 있으면 extension은 몇 가지 흔한 경로와 `PATH`의 `VESTA`를 시도합니다.
+
+## 사용법
+
+### 단일 구조 파일 열기
+
+1. VS Code에서 원격 workspace를 엽니다.
+2. `CONTCAR` 같은 구조 파일을 선택하거나 엽니다.
+3. `Remote VESTA: Open Active File`을 실행하거나, 파일을 우클릭해서 `Remote VESTA: Open in VESTA`를 선택합니다.
+
+선택한 파일은 로컬 임시 cache로 복사되고, 로컬 VESTA에서 열립니다.
+
+### NEB image 열기
+
+VASP NEB 디렉터리가 다음처럼 구성되어 있다고 가정합니다.
+
+```text
+neb_run/
+  00/POSCAR
+  01/CONTCAR
+  02/CONTCAR
+  03/CONTCAR
+  04/CONTCAR
+  05/CONTCAR
+  06/POSCAR
+```
+
+`neb_run` 폴더를 우클릭하고 다음 명령을 실행합니다.
+
+```text
+Remote VESTA: Pick NEB Image
+```
+
+숫자로 된 image 폴더들이 목록에 표시됩니다. 각 image에 `OSZICAR`가 있으면 최신 `E0` 값도 함께 표시됩니다.
+
+## 개발
+
+```bash
+npm run check
+```
+
+대화형 테스트는 VS Code에서 이 폴더를 열고 `F5`를 눌러 Extension Development Host를 실행하면 됩니다.
+
+## 패키징
+
+`vsce`를 사용할 수 있다면:
+
+```bash
+npx @vscode/vsce package
+```
+
+최소 환경을 위한 수동 VSIX 패키징 스크립트도 포함되어 있습니다.
+
+```bash
+./package_manual_vsix.sh
+```
+
+생성된 `.vsix` 파일은 VS Code에서 다음 명령으로 설치할 수 있습니다.
+
+```text
+Extensions: Install from VSIX...
+```
+
+## 참고
+
+- VESTA 실행 후에도 파일을 계속 읽을 수 있도록, 복사된 로컬 파일은 기본적으로 유지됩니다.
+- 이 extension은 원격 구조 파일을 수정하지 않습니다.
+- 현재 NEB picker는 `CONTCAR`와 `POSCAR`가 모두 있으면 `CONTCAR`를 우선합니다.
